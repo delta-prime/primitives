@@ -1,42 +1,64 @@
 # primitives
 
-Hot-swappable knowledge management primitives for AI agent context systems.
+CAG reference implementation — hot-swappable knowledge management primitives for AI agent context systems.
 
 ## What This Is
 
-A library of pure, deterministic primitives for building knowledge graphs that AI agents can read from and write to. Designed to be paradigm-agnostic: the product layer defines protocols (interfaces), this library implements them. Swap implementations without rewriting product code.
+`primitives` is the open-source layer of the CAG (Cognitive Augmented Generation) architecture. It implements the pure, deterministic parts: epistemology math, scoring signals, schema definitions, and the protocol interfaces that the service layer depends on.
+
+**Scope: what's in this library**
+
+| Module | What it provides |
+|--------|-----------------|
+| `primitives.epistemology` | Confidence math, contradiction detection, promotion rules (R1/R2), corroboration, provenance invariant checks |
+| `primitives.scoring` | Decay and freshness scoring formulas (Gaussian per-class decay) |
+| `primitives.schema` | Node type definitions, `PersistenceLayer` enum, edge type catalogue |
+| `primitives.protocols` | `KnowledgeStore`, `LifecycleManager`, `SignalProvider`, `ProvenanceTracker` interfaces |
+| `primitives.shared` | Shared utilities across modules |
+| `primitives.cag` | CAG-specific implementation of the protocols |
+
+**Scope: what is NOT in this library (proprietary service layer)**
+
+- Custodian workers — promotion, synthesis, revision scheduling
+- Extraction prompts and LLM orchestration
+- Heat-PPR scoring (ambient access-recency, Redis-backed)
+- Graph + vector write paths and backend integrations
+- Storage backends (Memgraph, Qdrant, Redis, Postgres)
+- REST API and MCP interface
+- Dagster pipelines and sensor logic
+
+## CAG Paradigm
+
+CAG splits knowledge persistence into four layers, each with distinct semantics:
+
+| Layer | Semantics | Examples |
+|-------|-----------|----------|
+| Memory | Experiences that fade (Gaussian decay) | Passages, events, utterances |
+| Knowledge | Facts that persist until contradicted | Claims, promoted Facts |
+| Wisdom | Beliefs that revise on evidence shift | Patterns, Commitments |
+| Intelligence | Ephemeral reasoning (session-scoped) | Reasoning chains |
+
+All adjudication is deterministic — no LLM calls at decision time.
+
+See `context/` for full paradigm documentation.
 
 ## Installation
 
 ```bash
-pip install primitives
+pip install delta-prime-primitives
 ```
 
-## Core Concepts
+Or from source:
 
-### Protocols
+```bash
+git clone https://github.com/delta-prime/primitives
+cd primitives
+pip install -e ".[dev]"
+```
 
-The library implements four core protocols (defined in your product repo):
-
-- **KnowledgeStore**: Ingest, query, retrieve, delete
-- **LifecycleManager**: Promote, supersede, decay
-- **SignalProvider**: Heat, confidence, freshness, priority
-- **ProvenanceTracker**: Derivation chains, citations
-
-### Layers
-
-Knowledge flows through four persistence layers:
-
-| Layer | Semantics | Examples |
-|-------|-----------|----------|
-| Memory | Experiences that fade | Passages, events, utterances |
-| Knowledge | Facts that persist until contradicted | Claims, facts |
-| Wisdom | Beliefs that revise on evidence shift | Patterns, commitments |
-| Intelligence | Ephemeral reasoning | Reasoning chains |
+## Usage
 
 ### Epistemology
-
-All adjudication is deterministic. No LLM calls at decision time.
 
 ```python
 from primitives.epistemology import (
@@ -64,31 +86,36 @@ if decision.should_promote:
     ...
 ```
 
-### Signals
+### Scoring
 
 ```python
-from primitives.signals import heat_score, freshness_score, priority_score
+from primitives.scoring import compute_effective_importance
 
-heat = heat_score(retrieval_events, now)
-fresh = freshness_score(updated_at, now)
-priority = priority_score(heat, fresh, confidence, age_days)
+# Gaussian decay — returns effective importance after age_days
+importance = compute_effective_importance(
+    base_importance=0.9,
+    decay_rate=0.01,   # class-specific; ephemeral=0.1, standard=0.01, durable=0.002
+    age_days=30.0,
+)
 ```
 
-## Usage
+Heat-PPR scores (ambient access-recency) are computed by the service layer and stored in Redis. They are not part of this library.
+
+### Protocol injection
 
 ```python
 from primitives.protocols import KnowledgeStore, Scope
-from primitives.cag import CAGKnowledgeStore  # or your implementation
+from primitives.cag import CAGKnowledgeStore  # or your own implementation
 
 # Inject at startup
 store: KnowledgeStore = CAGKnowledgeStore(graph_client, vector_client)
 
-# Product code uses protocols only
+# Product code uses the protocol interface only
 result = await store.ingest(content, metadata, scope)
 nodes = await store.query("what do we know about X?", scope)
 ```
 
-## Swapping Implementations
+### Swapping implementations
 
 ```python
 # Current paradigm
