@@ -27,7 +27,7 @@ class AgentPhase(StrEnum):
     STITCH = "stitch"
 
 
-class BudgetStatus(BaseModel):
+class BudgetStatus(BaseModel):  # type: ignore[misc]
     """Budget state exposed to agents in tool responses."""
 
     model_config = ConfigDict(extra="forbid")
@@ -59,8 +59,8 @@ class AgentConfig:
 
 
 T = TypeVar("T")
-DepsT = TypeVar("DepsT", contravariant=True)
-OutputT = TypeVar("OutputT", covariant=True)
+DepsT = TypeVar("DepsT", bound="DepsProtocol")
+OutputT = TypeVar("OutputT")
 
 
 @runtime_checkable

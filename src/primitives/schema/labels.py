@@ -92,18 +92,18 @@ CONTENT_LABELS: frozenset[str] = (
 
 # Label → layer mapping
 _LABEL_TO_LAYER: dict[str, PersistenceLayer] = {}
-for _lbl in MemoryLabel:
-    _LABEL_TO_LAYER[_lbl.value] = PersistenceLayer.MEMORY
-for _lbl in KnowledgeLabel:
-    _LABEL_TO_LAYER[_lbl.value] = PersistenceLayer.KNOWLEDGE
-for _lbl in WisdomLabel:
-    _LABEL_TO_LAYER[_lbl.value] = PersistenceLayer.WISDOM
-for _lbl in IntelligenceLabel:
-    _LABEL_TO_LAYER[_lbl.value] = PersistenceLayer.INTELLIGENCE
-for _lbl in RegistryLabel:
-    _LABEL_TO_LAYER[_lbl.value] = PersistenceLayer.REGISTRY
-for _lbl in AuditLabel:
-    _LABEL_TO_LAYER[_lbl.value] = PersistenceLayer.AUDIT
+for _m in MemoryLabel:
+    _LABEL_TO_LAYER[_m.value] = PersistenceLayer.MEMORY
+for _k in KnowledgeLabel:
+    _LABEL_TO_LAYER[_k.value] = PersistenceLayer.KNOWLEDGE
+for _w in WisdomLabel:
+    _LABEL_TO_LAYER[_w.value] = PersistenceLayer.WISDOM
+for _i in IntelligenceLabel:
+    _LABEL_TO_LAYER[_i.value] = PersistenceLayer.INTELLIGENCE
+for _r in RegistryLabel:
+    _LABEL_TO_LAYER[_r.value] = PersistenceLayer.REGISTRY
+for _a in AuditLabel:
+    _LABEL_TO_LAYER[_a.value] = PersistenceLayer.AUDIT
 
 
 def layer_for_label(label: str) -> PersistenceLayer | None:

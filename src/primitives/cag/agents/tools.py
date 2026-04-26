@@ -14,11 +14,11 @@ from pydantic import BaseModel, ConfigDict
 
 from primitives.cag.agents.base import BudgetStatus, DepsProtocol
 
-DepsT = TypeVar("DepsT", bound=DepsProtocol, contravariant=True)
-ResultT = TypeVar("ResultT", covariant=True)
+DepsT = TypeVar("DepsT", bound=DepsProtocol)
+ResultT = TypeVar("ResultT")
 
 
-class ToolResult(BaseModel):
+class ToolResult(BaseModel):  # type: ignore[misc]
     """Base class for tool results. All results carry budget status."""
 
     model_config = ConfigDict(extra="forbid")
@@ -26,7 +26,7 @@ class ToolResult(BaseModel):
     budget_status: BudgetStatus
 
 
-class ToolDefinition(BaseModel):
+class ToolDefinition(BaseModel):  # type: ignore[misc]
     """Metadata describing a tool for schema generation."""
 
     model_config = ConfigDict(extra="forbid")
@@ -38,7 +38,7 @@ class ToolDefinition(BaseModel):
 
 
 @runtime_checkable
-class ToolProtocol(Protocol[DepsT]):
+class ToolProtocol(Protocol[DepsT]):  # type: ignore[misc]
     """Protocol for CAG agent tools.
 
     Tools are async callables that receive a context (containing deps)
