@@ -6,13 +6,12 @@ Pure predicates for determining when claims should promote to facts.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
-from typing import Any
+from enum import StrEnum
 
 from primitives.cag.epistemology.confidence import SourceTier, noisy_or_aggregate
 
 
-class PromotionRule(str, Enum):
+class PromotionRule(StrEnum):
     """Promotion rule identifiers."""
 
     R1 = "R1"  # Single authoritative source

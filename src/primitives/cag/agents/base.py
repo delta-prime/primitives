@@ -9,13 +9,16 @@ from __future__ import annotations
 
 from abc import abstractmethod
 from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Generic, Protocol, TypeVar, runtime_checkable
+from enum import StrEnum
+from typing import TYPE_CHECKING, Any, Generic, Protocol, TypeVar, runtime_checkable
 
 from pydantic import BaseModel, ConfigDict
 
+if TYPE_CHECKING:
+    from primitives.cag.agents.tools import ToolProtocol
 
-class AgentPhase(str, Enum):
+
+class AgentPhase(StrEnum):
     """Visit phases for CAG agents."""
 
     FAST = "fast"
@@ -127,6 +130,6 @@ class AgentProtocol(Protocol[DepsT, OutputT]):
         """
         ...
 
-    def register_tool(self, tool: "ToolProtocol[DepsT]") -> None:
+    def register_tool(self, tool: ToolProtocol[DepsT]) -> None:
         """Register a tool on this agent."""
         ...

@@ -6,10 +6,10 @@ Pure functions for detecting contradictions and determining supersession.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 
 
-class ContradictionResult(str, Enum):
+class ContradictionResult(StrEnum):
     """Possible outcomes of contradiction detection."""
 
     NO_CONTRADICTION = "no_contradiction"

@@ -5,11 +5,11 @@ Pure functions for computing claim and aggregate confidence scores.
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 from functools import reduce
 
 
-class SourceTier(str, Enum):
+class SourceTier(StrEnum):
     """Source credibility tiers with associated weights."""
 
     AUTHORITATIVE = "authoritative"  # 1.0

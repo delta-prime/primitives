@@ -1,60 +1,59 @@
-"""Schema primitives: node types, edge types, layers."""
+"""CAG schema definitions: node labels, edge types, layer taxonomy.
 
-from primitives.protocols import Layer
+Single source of truth for graph structure. Import from here, not string literals.
+"""
 
-__all__ = ["Layer", "NodeType", "EdgeType"]
+from primitives.schema.edges import (
+    ALL_CAG_EDGES,
+    CLUSTERING_EDGES,
+    PROVENANCE_EDGES,
+    SEMANTIC_EDGES,
+    CAGEdgeType,
+)
+from primitives.schema.labels import (
+    ALL_CAG_LABELS,
+    AUDIT_LABELS,
+    CONTENT_LABELS,
+    INTELLIGENCE_LABELS,
+    KNOWLEDGE_LABELS,
+    MEMORY_LABELS,
+    REGISTRY_LABELS,
+    WISDOM_LABELS,
+    AuditLabel,
+    IntelligenceLabel,
+    KnowledgeLabel,
+    MemoryLabel,
+    PersistenceLayer,
+    RegistryLabel,
+    WisdomLabel,
+    layer_for_label,
+)
 
-
-class NodeType:
-    """Node type constants."""
-
-    # Memory layer
-    DOCUMENT = "Document"
-    PASSAGE = "Passage"
-    UTTERANCE = "Utterance"
-    EVENT = "Event"
-
-    # Knowledge layer
-    CLAIM = "Claim"
-    FACT = "Fact"
-
-    # Wisdom layer
-    BELIEF = "Belief"
-    PATTERN = "Pattern"
-    COMMITMENT = "Commitment"
-
-    # Intelligence layer
-    REASONING_CHAIN = "ReasoningChain"
-    QUERY_CONTEXT = "QueryContext"
-
-    # Registry
-    ENTITY = "Entity"
-    PREDICATE = "Predicate"
-    AGENT = "Agent"
-
-
-class EdgeType:
-    """Edge type constants."""
-
-    # Provenance
-    DERIVED_FROM = "DERIVED_FROM"
-    CITES = "CITES"
-    SUPERSEDES = "SUPERSEDES"
-    PROMOTED_FROM = "PROMOTED_FROM"
-    CRYSTALLIZED_INTO = "CRYSTALLIZED_INTO"
-
-    # Structure
-    MEMBER_OF = "MEMBER_OF"
-    PART_OF = "PART_OF"
-    BELONGS_TO = "BELONGS_TO"
-
-    # Entity resolution
-    MENTIONS = "MENTIONS"
-    USES_PREDICATE = "USES_PREDICATE"
-
-    # Synthesis
-    SYNTHESIZED_FROM = "SYNTHESIZED_FROM"
-    COVERS = "COVERS"
-
-    # Agent
-    DECLARED_BY = "DECLARED_BY"
+__all__ = [
+    # Edges
+    "CAGEdgeType",
+    "PROVENANCE_EDGES",
+    "SEMANTIC_EDGES",
+    "CLUSTERING_EDGES",
+    "ALL_CAG_EDGES",
+    # Layers
+    "PersistenceLayer",
+    # Labels by layer
+    "MemoryLabel",
+    "KnowledgeLabel",
+    "WisdomLabel",
+    "IntelligenceLabel",
+    "RegistryLabel",
+    "AuditLabel",
+    # Label sets
+    "MEMORY_LABELS",
+    "KNOWLEDGE_LABELS",
+    "WISDOM_LABELS",
+    "INTELLIGENCE_LABELS",
+    "REGISTRY_LABELS",
+    "AUDIT_LABELS",
+    "ALL_CAG_LABELS",
+    "CONTENT_LABELS",
+    # Utilities
+    "layer_for_label",
+]
