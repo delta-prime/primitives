@@ -50,4 +50,5 @@ What remains unresolved?
 
 ## Resolved Threads
 
+- [2026-04-26-agent-harness-split](2026-04-26-agent-harness-split.md) - Protocol in primitives, implementations private
 - [2026-04-26-hot-swap-architecture](../architecture-decision.md) - Protocol-based paradigm swapping
