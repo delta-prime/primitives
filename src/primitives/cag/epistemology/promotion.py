@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
-from primitives.epistemology.confidence import SourceTier, noisy_or_aggregate
+from primitives.cag.epistemology.confidence import SourceTier, noisy_or_aggregate
 
 
 class PromotionRule(str, Enum):
