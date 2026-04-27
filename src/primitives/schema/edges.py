@@ -22,6 +22,7 @@ class CAGEdgeType(StrEnum):
     USES_PREDICATE = "USES_PREDICATE"
     CAUSES = "CAUSES"
     CORROBORATES = "CORROBORATES"
+    REFERENCES = "REFERENCES"
 
     # Clustering edges
     MEMBER_OF = "MEMBER_OF"
@@ -44,6 +45,7 @@ SEMANTIC_EDGES: frozenset[str] = frozenset({
     CAGEdgeType.USES_PREDICATE,
     CAGEdgeType.CAUSES,
     CAGEdgeType.CORROBORATES,
+    CAGEdgeType.REFERENCES,
 })
 
 CLUSTERING_EDGES: frozenset[str] = frozenset({
