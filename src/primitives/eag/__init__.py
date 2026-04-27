@@ -20,10 +20,8 @@ from primitives.eag.epistemology import (
     should_promote_r2,
     should_supersede,
 )
-
-# Store/lifecycle implementations will be added here
-# from primitives.eag.store import EAGKnowledgeStore
-# from primitives.eag.lifecycle import EAGLifecycleManager
+from primitives.eag.lifecycle import EAGLifecycleManager
+from primitives.eag.store import EAGKnowledgeStore
 
 __all__ = [
     # Epistemology
@@ -40,7 +38,7 @@ __all__ = [
     "detect_contradiction",
     "should_supersede",
     "SupersessionDecision",
-    # Implementations (TODO)
-    # "EAGKnowledgeStore",
-    # "EAGLifecycleManager",
+    # Implementations
+    "EAGKnowledgeStore",
+    "EAGLifecycleManager",
 ]
