@@ -7,11 +7,11 @@
 
 The contextr codebase has two mental models colliding:
 
-1. **CAG spec (architecture/)**: Four-layer cognitive model (Memory, Knowledge, Wisdom, Intelligence) with transition workers (T1-T9), a work queue, and a deterministic epistemology library. `:Claim` promotes to `:Fact`.
+1. **EAG spec (architecture/)**: Four-layer cognitive model (Memory, Knowledge, Wisdom, Intelligence) with transition workers (T1-T9), a work queue, and a deterministic epistemology library. `:Claim` promotes to `:Fact`.
 
 2. **Shipped RAG-era code (app/custodian/)**: A 4-phase visit runner (fast, plan, deep, stitch) that produces `:Finding` nodes per cluster.
 
-The CAG spec describes a Custodian that doesn't exist. The code ships a different architecture. Anyone reading the spec is misled.
+The EAG spec describes a Custodian that doesn't exist. The code ships a different architecture. Anyone reading the spec is misled.
 
 ## Decision
 
@@ -82,10 +82,10 @@ class ProvenanceTracker(Protocol):
 
 ```python
 # Product startup - current paradigm
-from primitives.cag import CAGKnowledgeStore, CAGLifecycleManager
+from primitives.eag import EAGKnowledgeStore, EAGLifecycleManager
 
-store = CAGKnowledgeStore(memgraph, qdrant)
-lifecycle = CAGLifecycleManager(store)
+store = EAGKnowledgeStore(memgraph, qdrant)
+lifecycle = EAGLifecycleManager(store)
 app = build_app(store=store, lifecycle=lifecycle)
 
 # Future swap - new paradigm
@@ -142,13 +142,13 @@ app = build_app(store=store, lifecycle=lifecycle)  # same product code
 ## Rejected Alternatives
 
 ### A. Incremental Retrofit (the spec approach)
-Add CAG concepts to existing RAG-era code. Results in `:Finding` AND `:Fact`, two supersession modules, growing complexity. Same destination but more tangled.
+Add EAG concepts to existing RAG-era code. Results in `:Finding` AND `:Fact`, two supersession modules, growing complexity. Same destination but more tangled.
 
 ### B. Full Rewrite
 Throw away contextr, rebuild from scratch. Too slow given investor timeline.
 
 ### C. No Abstraction
-Build CAG directly in contextr, accept coupling. Locks in the paradigm, no swap path.
+Build EAG directly in contextr, accept coupling. Locks in the paradigm, no swap path.
 
 ## Consequences
 
@@ -161,5 +161,5 @@ Build CAG directly in contextr, accept coupling. Locks in the paradigm, no swap 
 ## References
 
 - `contextr/context/plans/cag/2026-04-26-custodian-reconciliation-spec.md` - the retrofit spec this replaces
-- `contextr/architecture/` - CAG paradigm docs
+- `contextr/architecture/` - EAG paradigm docs
 - `contextr/context/specs/rag/` - RAG-era specs

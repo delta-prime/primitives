@@ -1,6 +1,6 @@
 """Tests for supersession primitives."""
 
-from primitives.cag.epistemology.supersession import (
+from primitives.eag.epistemology.supersession import (
     ContradictionResult,
     FactForSupersession,
     detect_contradiction,

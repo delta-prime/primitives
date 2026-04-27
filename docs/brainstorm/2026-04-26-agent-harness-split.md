@@ -14,7 +14,7 @@ The context-service codebase contains pydantic-ai agent harnesses for the Custod
 4. **Budget constraints** (token limits, tool call limits, wrap-up signals)
 5. **Tool definitions** (fetch_members, commit_claim, finalize_visit, etc.)
 
-As primitives becomes the open-source foundation for CAG, we need to decide what lives here vs what stays private.
+As primitives becomes the open-source foundation for EAG, we need to decide what lives here vs what stays private.
 
 ## Options Considered
 
@@ -43,7 +43,7 @@ As primitives becomes the open-source foundation for CAG, we need to decide what
 Rationale:
 1. **Prompts are IP.** The system prompts encode years of iteration on how to make agents reason correctly about knowledge synthesis. Publishing them erases a moat.
 2. **Tool definitions are product-specific.** fetch_members, commit_claim, etc. expose internal data model details (clusters, findings, citations). The protocol abstracts over this.
-3. **Community value is in the interface.** Developers building CAG-compatible agents need to know what shape deps take, what results look like, how budget flows through. They don't need our specific prompt text.
+3. **Community value is in the interface.** Developers building EAG-compatible agents need to know what shape deps take, what results look like, how budget flows through. They don't need our specific prompt text.
 4. **Matches industry pattern.** OpenAI's assistants SDK defines tool schema without exposing implementation; LangChain separates base types from integrations.
 
 ## Consequences
@@ -63,7 +63,7 @@ Rationale:
 3. **Community can:**
    - Build agents that implement AgentProtocol
    - Define tools that implement ToolProtocol
-   - Integrate with CAG infrastructure by respecting the protocol contract
+   - Integrate with EAG infrastructure by respecting the protocol contract
 
 4. **We must:**
    - Keep protocol stable (semantic versioning)

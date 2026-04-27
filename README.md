@@ -1,10 +1,10 @@
 # primitives
 
-CAG reference implementation — hot-swappable knowledge management primitives for AI agent context systems.
+EAG reference implementation — hot-swappable knowledge management primitives for AI agent context systems.
 
 ## What This Is
 
-`primitives` is the open-source layer of the CAG (Cognitive Augmented Generation) architecture. It implements the pure, deterministic parts: epistemology math, scoring signals, schema definitions, and the protocol interfaces that the service layer depends on.
+`primitives` is the open-source layer of the EAG (Epistemic Augmented Generation) architecture. It implements the pure, deterministic parts: epistemology math, scoring signals, schema definitions, and the protocol interfaces that the service layer depends on.
 
 **Scope: what's in this library**
 
@@ -15,7 +15,7 @@ CAG reference implementation — hot-swappable knowledge management primitives f
 | `primitives.schema` | Node type definitions, `PersistenceLayer` enum, edge type catalogue |
 | `primitives.protocols` | `KnowledgeStore`, `LifecycleManager`, `SignalProvider`, `ProvenanceTracker` interfaces |
 | `primitives.shared` | Shared utilities across modules |
-| `primitives.cag` | CAG-specific implementation of the protocols |
+| `primitives.eag` | EAG-specific implementation of the protocols |
 
 **Scope: what is NOT in this library (proprietary service layer)**
 
@@ -27,7 +27,7 @@ CAG reference implementation — hot-swappable knowledge management primitives f
 - REST API and MCP interface
 - Dagster pipelines and sensor logic
 
-## CAG Paradigm
+## EAG Paradigm
 
 CAG splits knowledge persistence into four layers, each with distinct semantics:
 
@@ -105,10 +105,10 @@ Heat-PPR scores (ambient access-recency) are computed by the service layer and s
 
 ```python
 from primitives.protocols import KnowledgeStore, Scope
-from primitives.cag import CAGKnowledgeStore  # or your own implementation
+from primitives.eag import EAGKnowledgeStore  # or your own implementation
 
 # Inject at startup
-store: KnowledgeStore = CAGKnowledgeStore(graph_client, vector_client)
+store: KnowledgeStore = EAGKnowledgeStore(graph_client, vector_client)
 
 # Product code uses the protocol interface only
 result = await store.ingest(content, metadata, scope)
@@ -119,7 +119,7 @@ nodes = await store.query("what do we know about X?", scope)
 
 ```python
 # Current paradigm
-from primitives.cag import CAGKnowledgeStore
+from primitives.eag import EAGKnowledgeStore
 
 # Future paradigm (same interface)
 from primitives.newparadigm import NewKnowledgeStore

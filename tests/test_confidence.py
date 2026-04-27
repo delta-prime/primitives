@@ -1,6 +1,6 @@
 """Tests for confidence computation primitives."""
 
-from primitives.cag.epistemology.confidence import (
+from primitives.eag.epistemology.confidence import (
     SourceTier,
     combined_confidence,
     incremental_noisy_or,

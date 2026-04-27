@@ -1,12 +1,12 @@
-"""CAG edge types organized by function."""
+"""CITE edge types organized by function."""
 
 from __future__ import annotations
 
 from enum import StrEnum
 
 
-class CAGEdgeType(StrEnum):
-    """All CAG edge types."""
+class CITEEdgeType(StrEnum):
+    """All CITE schema edge types."""
 
     # Provenance edges (transition outputs)
     DERIVED_FROM = "DERIVED_FROM"
@@ -31,26 +31,26 @@ class CAGEdgeType(StrEnum):
 
 # Edge sets by function
 PROVENANCE_EDGES: frozenset[str] = frozenset({
-    CAGEdgeType.DERIVED_FROM,
-    CAGEdgeType.EXTRACTED_FROM,
-    CAGEdgeType.SUPERSEDES,
-    CAGEdgeType.SYNTHESIZED_FROM,
-    CAGEdgeType.PROMOTED_FROM,
-    CAGEdgeType.CRYSTALLIZED_INTO,
-    CAGEdgeType.DECLARED_BY,
+    CITEEdgeType.DERIVED_FROM,
+    CITEEdgeType.EXTRACTED_FROM,
+    CITEEdgeType.SUPERSEDES,
+    CITEEdgeType.SYNTHESIZED_FROM,
+    CITEEdgeType.PROMOTED_FROM,
+    CITEEdgeType.CRYSTALLIZED_INTO,
+    CITEEdgeType.DECLARED_BY,
 })
 
 SEMANTIC_EDGES: frozenset[str] = frozenset({
-    CAGEdgeType.MENTIONS,
-    CAGEdgeType.USES_PREDICATE,
-    CAGEdgeType.CAUSES,
-    CAGEdgeType.CORROBORATES,
-    CAGEdgeType.REFERENCES,
+    CITEEdgeType.MENTIONS,
+    CITEEdgeType.USES_PREDICATE,
+    CITEEdgeType.CAUSES,
+    CITEEdgeType.CORROBORATES,
+    CITEEdgeType.REFERENCES,
 })
 
 CLUSTERING_EDGES: frozenset[str] = frozenset({
-    CAGEdgeType.MEMBER_OF,
-    CAGEdgeType.COVERS,
+    CITEEdgeType.MEMBER_OF,
+    CITEEdgeType.COVERS,
 })
 
-ALL_CAG_EDGES: frozenset[str] = PROVENANCE_EDGES | SEMANTIC_EDGES | CLUSTERING_EDGES
+ALL_CITE_EDGES: frozenset[str] = PROVENANCE_EDGES | SEMANTIC_EDGES | CLUSTERING_EDGES

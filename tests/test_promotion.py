@@ -1,7 +1,7 @@
 """Tests for promotion rule primitives."""
 
-from primitives.cag.epistemology.confidence import SourceTier
-from primitives.cag.epistemology.promotion import (
+from primitives.eag.epistemology.confidence import SourceTier
+from primitives.eag.epistemology.promotion import (
     ClaimForPromotion,
     PromotionRule,
     should_promote_r1,

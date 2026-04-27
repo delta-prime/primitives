@@ -1,11 +1,11 @@
-"""CAG (Cognitive Augmented Generation) implementation.
+"""EAG (Epistemic Augmented Generation) implementation.
 
 Four-layer cognitive architecture: Memory -> Knowledge -> Wisdom -> Intelligence.
-Implements the protocol interfaces with CAG-specific semantics.
+Implements the protocol interfaces with EAG-specific semantics.
 """
 
 # Epistemology exports
-from primitives.cag.epistemology import (
+from primitives.eag.epistemology import (
     ClaimForPromotion,
     ContradictionResult,
     PromotionDecision,
@@ -22,8 +22,8 @@ from primitives.cag.epistemology import (
 )
 
 # Store/lifecycle implementations will be added here
-# from primitives.cag.store import CAGKnowledgeStore
-# from primitives.cag.lifecycle import CAGLifecycleManager
+# from primitives.eag.store import EAGKnowledgeStore
+# from primitives.eag.lifecycle import EAGLifecycleManager
 
 __all__ = [
     # Epistemology
@@ -41,6 +41,6 @@ __all__ = [
     "should_supersede",
     "SupersessionDecision",
     # Implementations (TODO)
-    # "CAGKnowledgeStore",
-    # "CAGLifecycleManager",
+    # "EAGKnowledgeStore",
+    # "EAGLifecycleManager",
 ]

@@ -1,11 +1,11 @@
-"""CAG Agent Protocol definitions.
+"""EAG Agent Protocol definitions.
 
-Defines abstract interfaces for CAG agents and tools. Implementations
+Defines abstract interfaces for EAG agents and tools. Implementations
 live in private repositories (context-service); this module provides
 the protocol contract that implementations must follow.
 """
 
-from primitives.cag.agents.base import (
+from primitives.eag.agents.base import (
     AgentConfig,
     AgentPhase,
     AgentProtocol,
@@ -14,7 +14,7 @@ from primitives.cag.agents.base import (
     BudgetStatus,
     DepsProtocol,
 )
-from primitives.cag.agents.tools import (
+from primitives.eag.agents.tools import (
     ToolDefinition,
     ToolProtocol,
     ToolResult,

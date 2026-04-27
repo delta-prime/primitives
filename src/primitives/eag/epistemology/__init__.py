@@ -4,20 +4,20 @@ All functions here are pure and deterministic. No LLM calls happen
 at adjudication time.
 """
 
-from primitives.cag.epistemology.confidence import (
+from primitives.eag.epistemology.confidence import (
     SourceTier,
     combined_confidence,
     incremental_noisy_or,
     noisy_or_aggregate,
 )
-from primitives.cag.epistemology.promotion import (
+from primitives.eag.epistemology.promotion import (
     ClaimForPromotion,
     PromotionDecision,
     PromotionRule,
     should_promote_r1,
     should_promote_r2,
 )
-from primitives.cag.epistemology.supersession import (
+from primitives.eag.epistemology.supersession import (
     ContradictionResult,
     FactForSupersession,
     SupersessionDecision,

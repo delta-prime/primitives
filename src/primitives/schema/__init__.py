@@ -1,17 +1,17 @@
-"""CAG schema definitions: node labels, edge types, layer taxonomy.
+"""CITE schema definitions: node labels, edge types, layer taxonomy.
 
 Single source of truth for graph structure. Import from here, not string literals.
 """
 
 from primitives.schema.edges import (
-    ALL_CAG_EDGES,
+    ALL_CITE_EDGES,
     CLUSTERING_EDGES,
     PROVENANCE_EDGES,
     SEMANTIC_EDGES,
-    CAGEdgeType,
+    CITEEdgeType,
 )
 from primitives.schema.labels import (
-    ALL_CAG_LABELS,
+    ALL_CITE_LABELS,
     AUDIT_LABELS,
     CONTENT_LABELS,
     INTELLIGENCE_LABELS,
@@ -31,11 +31,11 @@ from primitives.schema.labels import (
 
 __all__ = [
     # Edges
-    "CAGEdgeType",
+    "CITEEdgeType",
     "PROVENANCE_EDGES",
     "SEMANTIC_EDGES",
     "CLUSTERING_EDGES",
-    "ALL_CAG_EDGES",
+    "ALL_CITE_EDGES",
     # Layers
     "PersistenceLayer",
     # Labels by layer
@@ -52,7 +52,7 @@ __all__ = [
     "INTELLIGENCE_LABELS",
     "REGISTRY_LABELS",
     "AUDIT_LABELS",
-    "ALL_CAG_LABELS",
+    "ALL_CITE_LABELS",
     "CONTENT_LABELS",
     # Utilities
     "layer_for_label",

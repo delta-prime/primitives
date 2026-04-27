@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import StrEnum
 
-from primitives.cag.epistemology.confidence import SourceTier, noisy_or_aggregate
+from primitives.eag.epistemology.confidence import SourceTier, noisy_or_aggregate
 
 
 class PromotionRule(StrEnum):

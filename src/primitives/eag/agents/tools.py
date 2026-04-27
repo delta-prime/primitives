@@ -1,4 +1,4 @@
-"""Tool protocol definitions for CAG agents.
+"""Tool protocol definitions for EAG agents.
 
 Tools are functions that agents call to read state, commit artifacts, or
 signal completion. Each tool call updates the budget and may mutate the
@@ -12,7 +12,7 @@ from typing import Any, Protocol, TypeVar, runtime_checkable
 
 from pydantic import BaseModel, ConfigDict
 
-from primitives.cag.agents.base import BudgetStatus, DepsProtocol
+from primitives.eag.agents.base import BudgetStatus, DepsProtocol
 
 DepsT = TypeVar("DepsT", bound=DepsProtocol)
 ResultT = TypeVar("ResultT")
@@ -39,7 +39,7 @@ class ToolDefinition(BaseModel):  # type: ignore[misc]
 
 @runtime_checkable
 class ToolProtocol(Protocol[DepsT]):  # type: ignore[misc]
-    """Protocol for CAG agent tools.
+    """Protocol for EAG agent tools.
 
     Tools are async callables that receive a context (containing deps)
     and arguments, returning a result that includes budget status.

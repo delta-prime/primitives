@@ -3,7 +3,7 @@
 **Status:** draft
 **Date:** 2026-04-26
 
-Tool interface specs for CAG-compatible MCP servers. Implementations live in product repos; these specs define the contract.
+Tool interface specs for EAG-compatible MCP servers. Implementations live in product repos; these specs define the contract.
 
 ## Core Tools (MVP)
 

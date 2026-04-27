@@ -1,4 +1,4 @@
-"""CAG node labels organized by persistence layer.
+"""CITE node labels organized by persistence layer.
 
 Note: `PersistenceLayer` here extends the semantic 4-layer model (protocols.Layer)
 with registry and audit layers for system nodes. Use protocols.Layer for scope
@@ -11,7 +11,7 @@ from enum import StrEnum
 
 
 class PersistenceLayer(StrEnum):
-    """The four CAG layers plus registry and audit."""
+    """The four EAG layers plus registry and audit."""
 
     MEMORY = "memory"
     KNOWLEDGE = "knowledge"
@@ -76,7 +76,7 @@ INTELLIGENCE_LABELS: frozenset[str] = frozenset(lbl.value for lbl in Intelligenc
 REGISTRY_LABELS: frozenset[str] = frozenset(lbl.value for lbl in RegistryLabel)
 AUDIT_LABELS: frozenset[str] = frozenset(lbl.value for lbl in AuditLabel)
 
-ALL_CAG_LABELS: frozenset[str] = (
+ALL_CITE_LABELS: frozenset[str] = (
     MEMORY_LABELS
     | KNOWLEDGE_LABELS
     | WISDOM_LABELS

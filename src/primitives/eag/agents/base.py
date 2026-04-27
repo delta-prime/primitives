@@ -1,6 +1,6 @@
-"""Base protocol definitions for CAG agents.
+"""Base protocol definitions for EAG agents.
 
-Agents in CAG operate in phases (fast, plan, deep, stitch), each with
+Agents in EAG operate in phases (fast, plan, deep, stitch), each with
 distinct output types and budget constraints. This module defines the
 abstract interfaces; implementations are private.
 """
@@ -15,11 +15,11 @@ from typing import TYPE_CHECKING, Any, Generic, Protocol, TypeVar, runtime_check
 from pydantic import BaseModel, ConfigDict
 
 if TYPE_CHECKING:
-    from primitives.cag.agents.tools import ToolProtocol
+    from primitives.eag.agents.tools import ToolProtocol
 
 
 class AgentPhase(StrEnum):
-    """Visit phases for CAG agents."""
+    """Visit phases for EAG agents."""
 
     FAST = "fast"
     PLAN = "plan"
@@ -101,7 +101,7 @@ class AgentResult(Generic[T]):
 
 @runtime_checkable
 class AgentProtocol(Protocol[DepsT, OutputT]):
-    """Protocol for CAG agents.
+    """Protocol for EAG agents.
 
     An agent encapsulates a model, system prompt, output type, and budget
     constraints. Tools are registered separately via the ToolProtocol.

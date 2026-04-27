@@ -1,9 +1,9 @@
-# CAG Query Catalog
+# EAG Query Catalog
 
 **Status:** draft  
 **Date:** 2026-04-26
 
-This document catalogs the Cypher queries required for CAG operations in the primitives library. Queries are grouped by operation type. Each entry includes the query name, purpose, parameters, return shape, and the Cypher template.
+This document catalogs the Cypher queries required for EAG operations in the primitives library. Queries are grouped by operation type. Each entry includes the query name, purpose, parameters, return shape, and the Cypher template.
 
 ---
 

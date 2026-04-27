@@ -1,9 +1,9 @@
-# CAG Node/Edge Schema Spec
+# CITE Node/Edge Schema Spec
 
 **Status:** draft  
 **Date:** 2026-04-26
 
-This document specifies the CAG (Cognitive Augmented Generation) schema for the primitives library. It defines node types, edge types, their properties, indexes, and constraints.
+This document specifies the CITE (Epistemic Augmented Generation architecture) schema for the primitives library. It defines node types, edge types, their properties, indexes, and constraints.
 
 ## Layers
 
@@ -408,7 +408,7 @@ Tenancy container.
 
 #### `:Finding`
 
-Per-cluster visit output (RAG-era, audit role in CAG).
+Per-cluster visit output (RAG-era, audit role in EAG).
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
