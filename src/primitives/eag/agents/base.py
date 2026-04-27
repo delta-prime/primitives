@@ -27,7 +27,7 @@ class AgentPhase(StrEnum):
     STITCH = "stitch"
 
 
-class BudgetStatus(BaseModel):  # type: ignore[misc]
+class BudgetStatus(BaseModel):
     """Budget state exposed to agents in tool responses."""
 
     model_config = ConfigDict(extra="forbid")

@@ -18,7 +18,7 @@ DepsT = TypeVar("DepsT", bound=DepsProtocol)
 ResultT = TypeVar("ResultT")
 
 
-class ToolResult(BaseModel):  # type: ignore[misc]
+class ToolResult(BaseModel):
     """Base class for tool results. All results carry budget status."""
 
     model_config = ConfigDict(extra="forbid")
@@ -26,7 +26,7 @@ class ToolResult(BaseModel):  # type: ignore[misc]
     budget_status: BudgetStatus
 
 
-class ToolDefinition(BaseModel):  # type: ignore[misc]
+class ToolDefinition(BaseModel):
     """Metadata describing a tool for schema generation."""
 
     model_config = ConfigDict(extra="forbid")

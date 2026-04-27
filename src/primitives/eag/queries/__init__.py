@@ -35,6 +35,21 @@ from primitives.eag.queries.ddl import (
     REFERENCE_ORG_INDEX,
     REFERENCE_URL_INDEX,
 )
+from primitives.eag.queries.finding import (
+    FETCH_CURRENT_FINDING_CLUSTER_SCOPE,
+    FETCH_CURRENT_FINDING_SILO_SCOPE,
+    FINDING_HISTORY_CREATE,
+    FINDING_HISTORY_TRIM,
+    FINDING_MERGE_CLUSTER_SCOPE,
+    FINDING_MERGE_SILO_SCOPE,
+)
+from primitives.eag.queries.pass_ledger import (
+    PASS_CHECK_CLAIMED,
+    PASS_CLAIMED_EDGE_MERGE,
+    PASS_CREATE,
+    PASS_FINALIZE,
+    PASS_GET_BY_ID,
+)
 from primitives.eag.queries.silo import (
     CREATE_SILO,
     DELETE_SILO,
@@ -82,4 +97,17 @@ __all__ = [
     "PASS_SILO_INDEX",
     "REFERENCE_ORG_INDEX",
     "REFERENCE_URL_INDEX",
+    # finding
+    "FETCH_CURRENT_FINDING_CLUSTER_SCOPE",
+    "FETCH_CURRENT_FINDING_SILO_SCOPE",
+    "FINDING_MERGE_CLUSTER_SCOPE",
+    "FINDING_MERGE_SILO_SCOPE",
+    "FINDING_HISTORY_CREATE",
+    "FINDING_HISTORY_TRIM",
+    # pass_ledger
+    "PASS_CREATE",
+    "PASS_FINALIZE",
+    "PASS_CHECK_CLAIMED",
+    "PASS_GET_BY_ID",
+    "PASS_CLAIMED_EDGE_MERGE",
 ]
