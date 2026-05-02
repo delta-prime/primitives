@@ -6,6 +6,7 @@ Single source of truth for graph structure. Import from here, not string literal
 from primitives.schema.edges import (
     ALL_CITE_EDGES,
     CLUSTERING_EDGES,
+    META_MEMORY_EDGES,
     PROVENANCE_EDGES,
     SEMANTIC_EDGES,
     CITEEdgeType,
@@ -17,12 +18,14 @@ from primitives.schema.labels import (
     INTELLIGENCE_LABELS,
     KNOWLEDGE_LABELS,
     MEMORY_LABELS,
+    META_LABELS,
     REGISTRY_LABELS,
     WISDOM_LABELS,
     AuditLabel,
     IntelligenceLabel,
     KnowledgeLabel,
     MemoryLabel,
+    MetaMemoryLabel,
     PersistenceLayer,
     RegistryLabel,
     WisdomLabel,
@@ -35,6 +38,7 @@ __all__ = [
     "PROVENANCE_EDGES",
     "SEMANTIC_EDGES",
     "CLUSTERING_EDGES",
+    "META_MEMORY_EDGES",
     "ALL_CITE_EDGES",
     # Layers
     "PersistenceLayer",
@@ -45,6 +49,7 @@ __all__ = [
     "IntelligenceLabel",
     "RegistryLabel",
     "AuditLabel",
+    "MetaMemoryLabel",
     # Label sets
     "MEMORY_LABELS",
     "KNOWLEDGE_LABELS",
@@ -52,6 +57,7 @@ __all__ = [
     "INTELLIGENCE_LABELS",
     "REGISTRY_LABELS",
     "AUDIT_LABELS",
+    "META_LABELS",
     "ALL_CITE_LABELS",
     "CONTENT_LABELS",
     # Utilities

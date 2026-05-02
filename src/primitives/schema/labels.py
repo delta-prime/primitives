@@ -68,6 +68,12 @@ class AuditLabel(StrEnum):
     BOOTSTRAP_STATE = "BootstrapState"
 
 
+class MetaMemoryLabel(StrEnum):
+    """Meta-memory: agent observations about their own epistemic state."""
+
+    META_OBSERVATION = "MetaObservation"
+
+
 # Label sets by layer
 MEMORY_LABELS: frozenset[str] = frozenset(lbl.value for lbl in MemoryLabel)
 KNOWLEDGE_LABELS: frozenset[str] = frozenset(lbl.value for lbl in KnowledgeLabel)
@@ -75,6 +81,7 @@ WISDOM_LABELS: frozenset[str] = frozenset(lbl.value for lbl in WisdomLabel)
 INTELLIGENCE_LABELS: frozenset[str] = frozenset(lbl.value for lbl in IntelligenceLabel)
 REGISTRY_LABELS: frozenset[str] = frozenset(lbl.value for lbl in RegistryLabel)
 AUDIT_LABELS: frozenset[str] = frozenset(lbl.value for lbl in AuditLabel)
+META_LABELS: frozenset[str] = frozenset(lbl.value for lbl in MetaMemoryLabel)
 
 ALL_CITE_LABELS: frozenset[str] = (
     MEMORY_LABELS
@@ -83,6 +90,7 @@ ALL_CITE_LABELS: frozenset[str] = (
     | INTELLIGENCE_LABELS
     | REGISTRY_LABELS
     | AUDIT_LABELS
+    | META_LABELS
 )
 
 # Content labels: nodes that carry retrievable content (excludes registry/audit)
