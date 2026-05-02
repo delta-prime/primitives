@@ -112,6 +112,8 @@ for _r in RegistryLabel:
     _LABEL_TO_LAYER[_r.value] = PersistenceLayer.REGISTRY
 for _a in AuditLabel:
     _LABEL_TO_LAYER[_a.value] = PersistenceLayer.AUDIT
+for _mm in MetaMemoryLabel:
+    _LABEL_TO_LAYER[_mm.value] = PersistenceLayer.AUDIT
 
 
 def layer_for_label(label: str) -> PersistenceLayer | None:
