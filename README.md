@@ -40,7 +40,7 @@ CAG splits knowledge persistence into four layers, each with distinct semantics:
 
 All adjudication is deterministic — no LLM calls at decision time.
 
-See `context/` for full paradigm documentation.
+See `context/` for full paradigm documentation and the [EAG Manifesto](https://github.com/delta-prime/primitives/blob/main/docs/manifesto.md).
 
 ## Installation
 
