@@ -29,6 +29,9 @@ class CITEEdgeType(StrEnum):
     MEMBER_OF = "MEMBER_OF"
     COVERS = "COVERS"
 
+    # Pattern edges
+    OBSERVED_IN = "OBSERVED_IN"
+
     # Meta-memory edges
     ABOUT = "ABOUT"
 
@@ -58,8 +61,14 @@ CLUSTERING_EDGES: frozenset[str] = frozenset({
     CITEEdgeType.COVERS,
 })
 
+PATTERN_EDGES: frozenset[str] = frozenset({
+    CITEEdgeType.OBSERVED_IN,
+})
+
 META_MEMORY_EDGES: frozenset[str] = frozenset({
     CITEEdgeType.ABOUT,
 })
 
-ALL_CITE_EDGES: frozenset[str] = PROVENANCE_EDGES | SEMANTIC_EDGES | CLUSTERING_EDGES | META_MEMORY_EDGES
+ALL_CITE_EDGES: frozenset[str] = (
+    PROVENANCE_EDGES | SEMANTIC_EDGES | CLUSTERING_EDGES | PATTERN_EDGES | META_MEMORY_EDGES
+)
