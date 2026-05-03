@@ -22,6 +22,7 @@ class CITEEdgeType(StrEnum):
     USES_PREDICATE = "USES_PREDICATE"
     CAUSES = "CAUSES"
     CORROBORATES = "CORROBORATES"
+    PREVENTS = "PREVENTS"
     REFERENCES = "REFERENCES"
 
     # Clustering edges
@@ -48,6 +49,7 @@ SEMANTIC_EDGES: frozenset[str] = frozenset({
     CITEEdgeType.USES_PREDICATE,
     CITEEdgeType.CAUSES,
     CITEEdgeType.CORROBORATES,
+    CITEEdgeType.PREVENTS,
     CITEEdgeType.REFERENCES,
 })
 
