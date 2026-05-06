@@ -50,6 +50,7 @@ class IntelligenceLabel(StrEnum):
 
     REASONING_CHAIN = "ReasoningChain"
     QUERY_CONTEXT = "QueryContext"
+    WORKING_BELIEF = "WorkingBelief"
 
 
 class RegistryLabel(StrEnum):
