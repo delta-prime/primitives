@@ -43,6 +43,7 @@ class WisdomLabel(StrEnum):
 
     BELIEF = "Belief"
     PATTERN = "Pattern"
+    PROPOSED_BELIEF = "ProposedBelief"
 
 
 class IntelligenceLabel(StrEnum):
@@ -50,7 +51,7 @@ class IntelligenceLabel(StrEnum):
 
     REASONING_CHAIN = "ReasoningChain"
     QUERY_CONTEXT = "QueryContext"
-    WORKING_BELIEF = "WorkingBelief"
+    WORKING_HYPOTHESIS = "WorkingHypothesis"
 
 
 class RegistryLabel(StrEnum):

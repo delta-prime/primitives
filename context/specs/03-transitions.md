@@ -6,19 +6,20 @@ The layers themselves are a taxonomy. The **transitions** between them define th
 
 ```
     Memory --- extract ---> Knowledge --- synthesize ---> Wisdom
-      |                       |                            |
-      |                       v                            |
-      |                   supersede                     revise
-      |                (Knowledge->Knowledge)        (Wisdom->Wisdom
-      |                                              on evidence shift)
-      v
-    decay
-   (retrieval
-    weight -> 0)
+      |                       |              |              |
+      |                       v              v              |
+      |                   supersede      propose         revise
+      |                (Knowledge->     (creates       (Wisdom->Wisdom
+      |                 Knowledge)    ProposedBelief)  on evidence shift)
+      v                                    |
+    decay                            accept/reject
+   (retrieval                     (ProposedBelief ->
+    weight -> 0)                   Belief or tombstone)
 
-    Intelligence -- consensus --> Knowledge
-    Intelligence -- trace ------> Memory
-    Intelligence -- commit -----> Wisdom
+    Intelligence -- consensus ---> Knowledge
+    Intelligence -- trace -------> Memory
+    Intelligence -- commit ------> Wisdom (Commitment)
+    Intelligence -- crystallize -> Wisdom (from WorkingHypothesis)
 ```
 
 ## Transition catalogue
@@ -34,6 +35,10 @@ The layers themselves are a taxonomy. The **transitions** between them define th
 | T7 | **Intelligence -> Wisdom** (commit) — writes `:Claim:Commitment` (Knowledge-structure, Wisdom-semantics) | agent declares a stance | eager | N/A |
 | T8 | **Memory -> ⊥** (decay) | time-based; retrieval weight -> 0 | compute-at-query | N/A |
 | T9 | **Memory -> ⊥** (hard-delete) | `age > 2 × class.σ` OR GDPR | scheduled GC (hard-delete default) | `age` |
+| T10 | **Knowledge -> Wisdom** (propose) | synthesis confidence in weak range (above min, below auto-promote) | signal-driven | `heat × confidence` |
+| T11 | **Wisdom -> Wisdom** (accept) | validator accepts ProposedBelief | eager | N/A |
+| T12 | **Wisdom -> ⊥** (reject) | validator rejects ProposedBelief | eager | N/A |
+| T13 | **Intelligence -> Wisdom** (crystallize) | agent crystallizes WorkingHypothesis | eager | N/A |
 
 ## The execution rule
 
@@ -59,3 +64,7 @@ Every transition that creates a node writes a provenance edge back to its source
 - T5 consensus: `(:Fact)-[:PROMOTED_FROM]->(:ReasoningChain)+`
 - T6 trace: `(:ReasoningChain)-[:DERIVED_FROM_EVIDENCE]->(:Document|:Passage|:Claim)+`; optionally `(:ReasoningChain)-[:CRYSTALLIZED_INTO]->(:Claim)` for crystallizations
 - T7 commit: `(:Claim:Commitment)-[:DECLARED_BY]->(:Agent)` (per D1); `CRYSTALLIZED_INTO` used for Intelligence->Knowledge linkage
+- T10 propose: `(:ProposedBelief)-[:SYNTHESIZED_FROM]->(:Fact)+` (same as T3, but creates proposal)
+- T11 accept: `(:Belief)-[:PROMOTED_FROM]->(:ProposedBelief)` with `accepted_at` timestamp
+- T12 reject: `(:ProposedBelief)` marked `status='rejected'` with `reason` and `rejected_at`
+- T13 crystallize: `(:Commitment)-[:CRYSTALLIZED_FROM]->(:WorkingHypothesis)`

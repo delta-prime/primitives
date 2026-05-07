@@ -37,8 +37,9 @@
 - `:Belief` — a synthesised judgment over many Facts
 - `:Pattern` — a recurring shape detected across Facts
 - `:Commitment` — a declared stance (agent-authored)
+- `:ProposedBelief` — a weak synthesis awaiting validation (status: pending/accepted/rejected)
 
-**Transitions in:** Knowledge → Wisdom via synthesis (cluster density threshold). Wisdom → Wisdom via revision (distribution shift >= M%).
+**Transitions in:** Knowledge → Wisdom via synthesis (cluster density threshold). Knowledge → Wisdom via propose (weak confidence creates ProposedBelief). Wisdom → Wisdom via revision (distribution shift >= M%). ProposedBelief → Belief via accept. ProposedBelief → tombstone via reject.
 
 Revision writes a new `:Belief` with a `SUPERSEDES` edge to the old Belief, `reason='evidence_shift'`. Old Beliefs remain queryable for audit and `as_of` temporal queries — Beliefs are never replaced in place.
 
@@ -54,6 +55,7 @@ Revision writes a new `:Belief` with a `SUPERSEDES` edge to the old Belief, `rea
 **Node types:**
 - `:ReasoningChain` — a stored reasoning sequence with steps inlined as a `steps: list[ChainStep]` JSON property (not separate nodes)
 - `:QueryContext` — the working set assembled for a specific query
+- `:WorkingHypothesis` — an agent's in-progress hypothesis during reasoning (session-scoped, mutable)
 
 **Promotion paths out:**
 - `Intelligence → Knowledge` via consensus: >= K chains from effective_J >= threshold agents agree → promote to Fact
