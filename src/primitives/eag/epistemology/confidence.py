@@ -78,6 +78,43 @@ def noisy_or_aggregate(confidences: list[float], cap: float = 0.99) -> float:
     return min(result, cap)
 
 
+_EPISTEMIC_DISCOUNT: float = 0.7
+"""Discount applied to uncorroborated single-source claims.
+
+A claim supported by only one source has inherent uncertainty that
+corroboration resolves. This factor represents the pre-corroboration
+epistemic penalty.
+"""
+
+
+def partial_confidence(
+    raw_confidence: float,
+    source_reliability: float = 1.0,
+) -> float:
+    """Compute pre-corroboration confidence for a single-source claim.
+
+    Used when storing a Claim before corroboration has occurred. The result
+    is a provisional score; once the claim is corroborated and promoted to
+    a Fact, `combined_confidence` should be used to derive the final score.
+
+    Formula: raw_confidence * source_reliability * EPISTEMIC_DISCOUNT (0.7)
+
+    The 0.7 epistemic discount reflects that single-source claims carry
+    inherent uncertainty regardless of source quality. Corroboration by
+    independent sources removes this discount.
+
+    Args:
+        raw_confidence: Base confidence from extraction (0.0 - 1.0).
+        source_reliability: Reliability multiplier for the source (0.0 - 1.0,
+            default 1.0 for an unqualified source).
+
+    Returns:
+        Provisional confidence score clamped to [0.0, 1.0].
+    """
+    result = raw_confidence * source_reliability * _EPISTEMIC_DISCOUNT
+    return min(max(result, 0.0), 1.0)
+
+
 def incremental_noisy_or(
     current_aggregate: float,
     new_confidence: float,

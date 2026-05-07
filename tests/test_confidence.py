@@ -5,6 +5,7 @@ from primitives.eag.epistemology.confidence import (
     combined_confidence,
     incremental_noisy_or,
     noisy_or_aggregate,
+    partial_confidence,
 )
 
 
@@ -121,3 +122,26 @@ class TestIncrementalNoisyOr:
     def test_custom_cap(self):
         result = incremental_noisy_or(0.9, 0.9, cap=0.95)
         assert result == 0.95
+
+
+class TestPartialConfidence:
+    def test_full_confidence_with_discount(self):
+        result = partial_confidence(1.0)
+        assert result == 0.7
+
+    def test_source_reliability_multiplier(self):
+        result = partial_confidence(1.0, source_reliability=0.5)
+        assert result == 0.35
+
+    def test_clamped_to_one(self):
+        result = partial_confidence(2.0, source_reliability=1.0)
+        assert result == 1.0
+
+    def test_clamped_to_zero(self):
+        result = partial_confidence(-0.5)
+        assert result == 0.0
+
+    def test_typical_claim(self):
+        result = partial_confidence(0.8, source_reliability=0.9)
+        expected = 0.8 * 0.9 * 0.7
+        assert abs(result - expected) < 1e-10

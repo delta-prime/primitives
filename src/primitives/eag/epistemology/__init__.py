@@ -9,6 +9,7 @@ from primitives.eag.epistemology.confidence import (
     combined_confidence,
     incremental_noisy_or,
     noisy_or_aggregate,
+    partial_confidence,
 )
 from primitives.eag.epistemology.promotion import (
     ClaimForPromotion,
@@ -30,6 +31,7 @@ __all__ = [
     "combined_confidence",
     "noisy_or_aggregate",
     "incremental_noisy_or",
+    "partial_confidence",
     "PromotionRule",
     "ClaimForPromotion",
     "PromotionDecision",
