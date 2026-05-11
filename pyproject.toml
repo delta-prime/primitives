@@ -1,19 +1,18 @@
 [project]
-name = "primitives"
+name = "engrammic-primitives"
 version = "0.1.0"
-description = "Hot-swappable knowledge management primitives for AI agent context systems"
+description = "EAG schema primitives for epistemic context management"
 readme = "README.md"
-requires-python = ">=3.11"
-license = { text = "MIT" }
-authors = [{ name = "Delta Prime", email = "hello@deltaprime.dev" }]
+requires-python = ">=3.13"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Aliasgar Khimani", email = "aliasgar.khimani@engrammic.ai" }]
 keywords = ["graphrag", "knowledge-graph", "ai-agents", "context-management"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
@@ -38,14 +37,14 @@ packages = ["src/primitives"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "ARG"]
 ignore = ["E501"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.13"
 strict = true
 warn_return_any = true
 warn_unused_configs = true
