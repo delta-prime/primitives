@@ -4,15 +4,14 @@
 
 ## Design Philosophy
 
-The MCP surface uses **3 core tools** that map to fundamental operations:
+The MCP surface uses **intent-based tools** that map to what agents want to do, not implementation layers. Two profiles serve different use cases:
 
-| Operation | Tool | What it does |
-|-----------|------|--------------|
-| Write | `context_store` | Store to any layer (memory, knowledge, wisdom, intelligence, meta) |
-| Read | `context_recall` | Retrieve via search, fetch, graph, history, or provenance |
-| Link | `context_link` | Create relationships between nodes |
+| Profile | Tools | Use case |
+|---------|-------|----------|
+| **standard** | 7 | Most agents. Observe, claim, believe, search, trace, connect. |
+| **reasoning** | 12 | Extended reasoning with tentative belief management. |
 
-This minimal surface follows the "less is more" principle: agents learn 3 tools instead of 15, with layer/mode parameters providing the specificity. Skills (agent-side prompt templates) teach common patterns.
+This follows the "fewer well-designed tools" principle: agents learn tools named for their intent, with profiles providing the right subset for the context.
 
 ## Silo Tenancy
 
@@ -22,102 +21,201 @@ The service derives `silo_id` deterministically from `org_id` in the auth contex
 
 ## Tool Surface
 
-### context_store
+### Standard Profile (7 tools)
 
-Write content to any cognitive layer.
+#### remember
+
+Store an observation to memory.
 
 ```
-context_store(
-  content: str,
-  layer: str = "memory",       # memory | knowledge | wisdom | intelligence | meta
-  evidence: list[str] | None,  # required for knowledge
-  about: list[str] | None,     # required for wisdom, meta
-  steps: list[dict] | None,    # required for intelligence
+remember(
+  content: str,              # What to remember
+  tags: list[str] | None,    # Optional categorization
+  decay: str = "standard",   # ephemeral|standard|durable|permanent
+) -> {node_id, created_at}
+```
+
+**Decay classes:** `ephemeral` (7d), `standard` (90d), `durable` (540d), `permanent` (5y)
+
+#### learn
+
+Assert a claim with evidence.
+
+```
+learn(
+  claim: str,                # What you learned
+  evidence: list[str],       # REQUIRED: node:<id> or URI
+  source: str,               # document|user|external|agent
+  confidence: float = 0.8,   # 0.0-1.0
   tags: list[str] | None,
-  session: str | None,
-) -> {node_id, layer, created_at}
+) -> {node_id, evidence_status, created_at}
 ```
 
-**Layer-specific requirements:**
+#### believe
 
-| Layer | Required params | Creates |
-|-------|-----------------|---------|
-| memory | (none) | Memory node (decays) |
-| knowledge | `evidence` | Claim (may promote to Fact) |
-| wisdom | `about` | Belief/Commitment |
-| intelligence | `steps` | ReasoningChain |
-| meta | `about` | MetaObservation |
-
-**Decay classes (memory layer only):** `ephemeral` (7d), `standard` (90d), `durable` (540d), `permanent` (5y)
-
-### context_recall
-
-Retrieve from epistemic memory with multiple modes.
+Declare a commitment.
 
 ```
-context_recall(
-  query: str,
-  mode: str = "search",        # search | fetch | graph | history | provenance
-  node_ids: list[str] | None,  # for fetch, history, provenance modes
-  depth: int = 0,              # for graph mode (0 = flat, 1-3 = traversal)
-  layers: list[str] | None,    # filter by layer
+believe(
+  belief: str,               # What you believe
+  about: list[str],          # REQUIRED: node IDs this concerns
+  confidence: float = 0.8,
+  reasoning: str | None,     # Why you believe this
+) -> {node_id, created_at}
+```
+
+#### recall
+
+Search or fetch knowledge.
+
+```
+recall(
+  query: str | None,         # Natural language search
+  node_ids: list[str] | None,# Specific nodes to fetch
+  depth: int = 0,            # 0=flat, 1-3=graph traversal
+  layers: list[str] | None,  # memory|knowledge|wisdom|intelligence
   top_k: int = 10,
-  as_of: str | None,           # time-travel (ISO datetime)
-) -> {results, mode, search_time_ms}
+  include_hypotheses: bool = False,  # Include tentative beliefs
+) -> {results|nodes, hypotheses?, ...}
 ```
 
-**Mode behavior:**
+#### trace
 
-| Mode | Uses query | Uses node_ids | Returns |
-|------|------------|---------------|---------|
-| search | Yes | No | Semantic search results |
-| fetch | No | Yes | Nodes by ID (cached, <20ms) |
-| graph | Yes or node_ids | Optional | Subgraph traversal |
-| history | No | Yes (one) | SUPERSEDES chain |
-| provenance | No | Yes (one) | Citation chain to sources |
-
-### context_link
-
-Create typed relationships between nodes.
+Explain provenance of a belief.
 
 ```
-context_link(
-  from_id: str,
-  to_id: str,
-  rel: str,                    # supports | contradicts | derives | supersedes | references
-  weight: float = 1.0,
+trace(
+  node_id: str,              # Node to trace
+) -> {chain: [...], root_sources: [...]}
+```
+
+#### link
+
+Create a typed relationship.
+
+```
+link(
+  from_node: str,            # Source node
+  to_node: str,              # Target node
+  relationship: str,         # supports|contradicts|derives|references|causes|supersedes
+  weight: float = 1.0,       # 0.0-10.0
   note: str | None,
-) -> {edge_id, rel, created_at}
+) -> {edge_id, created_at}
 ```
 
-## Skills
+#### patterns
 
-Skills are agent-side prompt templates that teach when and how to use the core tools. They are NOT MCP tools — they're patterns installed in the agent's system prompt.
+Discover workflow templates.
 
-**Core skills:**
+```
+patterns(
+  action: str,               # list|get|search
+  name: str | None,          # Pattern name (for get)
+  query: str | None,         # Search query
+  profile: str | None,       # Filter by profile
+) -> {patterns: [...]}
+```
 
-| Skill | Trigger | Maps to |
-|-------|---------|---------|
-| observe | "remember this" | `context_store(layer="memory")` |
-| learn | "I learned" | `context_store(layer="knowledge", evidence=[...])` |
-| recall | "what do I know" | `context_recall(mode="search")` |
-| trace | "why do I believe" | `context_recall(mode="provenance")` |
-| reflect | "I notice a pattern" | `context_store(layer="meta", about=[...])` |
-| reason | "let me think through" | `context_store(layer="intelligence", steps=[...])` |
+### Reasoning Profile (adds 5 tools)
 
-Skills are distributed separately. See [skills/context-skills.md](../../../context-service/skills/context-skills.md).
+#### reason
+
+Record a reasoning chain.
+
+```
+reason(
+  steps: list[{step, reasoning, confidence?}],
+  conclusion: str | None,
+  evidence_used: list[str] | None,
+) -> {chain_id, session_id, created_at}
+```
+
+#### reflect
+
+Note a meta-observation.
+
+```
+reflect(
+  observation: str,          # What you noticed
+  type: str,                 # pattern|contradiction|uncertainty|drift
+  about: list[str],          # REQUIRED: nodes this concerns
+  confidence: float = 0.8,
+) -> {node_id, created_at}
+```
+
+#### hypothesize
+
+Form a tentative belief.
+
+```
+hypothesize(
+  hypothesis: str,           # Tentative belief
+  about: list[str],          # REQUIRED: nodes this concerns
+  confidence: float = 0.8,
+  session_id: str | None,    # Auto-derived from MCP connection
+) -> {belief_id, session_id, potential_conflicts, created_at}
+```
+
+#### revise
+
+Update a tentative belief.
+
+```
+revise(
+  belief_id: str,            # Hypothesis to update
+  confidence: float,         # New confidence
+  content: str | None,       # New content (optional)
+  reason: str,               # REQUIRED: why revising
+) -> {updated_at}
+```
+
+#### commit
+
+Crystallize to permanent commitment.
+
+```
+commit(
+  belief_ids: list[str],     # Hypotheses to commit
+  reason: str | None,
+) -> {committed: [...], superseded: [...]}
+```
+
+## Internal Tools (Not Agent-Facing)
+
+These are NOT exposed to agents. Used by SAGE and internal systems:
+
+| Tool | Internal Use |
+|------|--------------|
+| `context_admin` | Silo management, session lifecycle |
+| `context_accept_belief` | Custodian accepting ProposedBeliefs |
+| `context_reject_belief` | Custodian rejecting ProposedBeliefs |
+| `context_belief_state` | Internal session inspection |
+
+## Configuration
+
+Tools are configured via YAML at `src/context_service/config/mcp_tools.yaml`. Profile selection:
+
+```python
+# Priority: param > env > settings > default
+profile = (
+    param
+    or os.environ.get("MCP_TOOL_PROFILE")
+    or settings.mcp_tool_profile
+    or "standard"
+)
+```
 
 ## Evidence Requirements
 
 **Principle:** Knowledge-layer writes require grounded evidence. Agents cannot hallucinate sources.
 
-| Layer | Evidence required? | Grounding mechanism |
-|-------|-------------------|---------------------|
-| memory | No | Memories ARE grounding |
-| knowledge | Yes | `DERIVED_FROM` edge to Memory node or validated URI |
-| wisdom | No | Derives from Knowledge via synthesis |
-| intelligence | No | Session-scoped, ephemeral |
-| meta | No | References existing nodes via `about` |
+| Tool | Evidence required? | Grounding mechanism |
+|------|-------------------|---------------------|
+| remember | No | Memories ARE grounding |
+| learn | Yes | `DERIVED_FROM` edge to Memory node or validated URI |
+| believe | No | Derives from Knowledge via synthesis |
+| reason | No | Session-scoped, ephemeral |
+| reflect | No | References existing nodes via `about` |
 
 ### Evidence Formats
 
@@ -144,14 +242,14 @@ Race conditions are resolved through:
 
 ## Relationship to Transitions
 
-| Tool + layer/mode | Primary layer | Related transitions |
-|-------------------|---------------|---------------------|
-| `context_store` layer=memory | Memory | T8 (decay), T9 (hard-delete) |
-| `context_store` layer=knowledge | Knowledge | T1 (extract from), T2 (supersede), T5 (promote to) |
-| `context_store` layer=wisdom | Wisdom | T7 (commit) |
-| `context_store` layer=meta | Meta | (none — meta-observations don't transition) |
-| `context_store` layer=intelligence | Intelligence | T5 (consensus), T6 (trace) |
-| `context_recall` mode=provenance | (read) | T6 (trace) |
+| Tool | Primary layer | Related transitions |
+|------|---------------|---------------------|
+| `remember` | Memory | T8 (decay), T9 (hard-delete) |
+| `learn` | Knowledge | T1 (extract from), T2 (supersede), T5 (promote to) |
+| `believe` | Wisdom | T7 (commit) |
+| `reflect` | Meta | (none — meta-observations don't transition) |
+| `reason` | Intelligence | T5 (consensus), T6 (trace) |
+| `trace` | (read) | T6 (trace) |
 
 The Custodian handles transitions; agents express intent through MCP tools.
 
