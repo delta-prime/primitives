@@ -61,6 +61,10 @@ build-check:
     uv build
     uv run twine check dist/*
 
+# Publish to PyPI (requires TWINE_USERNAME=__token__ TWINE_PASSWORD=<api-token>)
+publish: build-check
+    uv run twine upload dist/*
+
 # --- Cleanup ---
 
 # Remove cache and build artifacts
